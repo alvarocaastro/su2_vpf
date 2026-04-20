@@ -2,7 +2,7 @@
 from pathlib import Path
 
 # ── Root directories ──────────────────────────────────────────────────────────
-PROJECT_ROOT = Path(__file__).resolve().parents[3]   # su2_vpf/
+PROJECT_ROOT = Path(__file__).resolve().parents[2]   # su2_vpf/
 SRC_ROOT     = Path(__file__).resolve().parent        # su2_analysis/
 
 DATA_DIR     = PROJECT_ROOT / "data"
