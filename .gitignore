@@ -19,12 +19,10 @@ env/
 .coverage
 htmlcov/
 
-# SU2 runtime output (large binary/text files generated during runs)
-results/
+# SU2 runtime output — keep directory structure, ignore generated files
+results/**/*
+!results/**/.gitkeep
 *.su2
-*.cfg
-*.dat
-*.csv
 *.vtk
 *.vtu
 *.pvtu
@@ -36,6 +34,9 @@ surface_flow*
 
 # Keep airfoil data files
 !data/airfoils/*.dat
+
+# Claude Code internal state
+.claude/
 
 # IDE
 .vscode/
