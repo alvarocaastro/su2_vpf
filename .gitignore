@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# SU2 runtime output (large binary/text files generated during runs)
+results/
+*.su2
+*.cfg
+*.dat
+*.csv
+*.vtk
+*.vtu
+*.pvtu
+history*
+restart_flow*
+solution_flow*
+volume_flow*
+surface_flow*
+
+# Keep airfoil data files
+!data/airfoils/*.dat
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
