@@ -1,0 +1,38 @@
+engine:
+  name: GE9X-class
+  baseline_sfc: 0.50              # lb/(lbf·h)
+  fan_efficiency: 0.90
+  bypass_ratio: 10.0
+  design_thrust_kN: 105.0
+  dry_weight_kg: 7930.0
+  fan_diameter_m: 3.40
+
+efficiency_transfer:
+  tau: 0.50                       # 2D-to-3D damping factor
+
+mission:
+  phases:
+    takeoff:
+      duration_min: 0.5
+      thrust_fraction: 1.00
+    climb:
+      duration_min: 20.0
+      thrust_fraction: 0.75
+    cruise:
+      duration_min: 480.0
+      thrust_fraction: 0.25
+    descent:
+      duration_min: 25.0
+      thrust_fraction: 0.05
+
+reverse_thrust:
+  rpm_fraction: 0.65              # N1 during ground roll
+  axial_velocity: 60.0            # m/s
+  delta_beta_sweep_start: -25.0   # degrees
+  delta_beta_sweep_end: -5.0
+  delta_beta_sweep_points: 41
+  min_stall_margin_deg: 0.0
+
+mechanism_weight:
+  vpf_actuator_fraction: 0.04    # fraction of dry engine weight
+  cascade_reverser_fraction: 0.10

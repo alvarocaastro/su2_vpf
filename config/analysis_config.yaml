@@ -1,0 +1,71 @@
+fan_geometry:
+  rpm: 2200
+  n_blades: 16
+  hub_to_tip_ratio: 0.31
+  sections:
+    root: {radius: 0.53, chord: 0.36, solidity: 1.73}
+    mid:  {radius: 1.00, chord: 0.46, solidity: 1.17}
+    tip:  {radius: 1.70, chord: 0.46, solidity: 0.69}
+
+su2:
+  executable: C:/Users/Alvaro/Desktop/su2/SU2-v8.4.0-win64/win64/bin/SU2_CFD.exe
+  max_iter: 5000
+  convergence_residual: -8
+  turbulence_model: SA          # Spalart-Allmaras
+  cfl_number: 5.0
+  mesh_farfield_radius: 20      # multiples of chord
+  mesh_airfoil_points: 300
+  mesh_radial_layers: 100
+  mesh_growth_rate: 1.15
+  target_yplus: 1.0
+  timeout_seconds: 600
+  max_retries: 3
+
+reference_condition:
+  mach: 0.3
+  reynolds: 3.0e6
+  ncrit: 4.0
+  alpha_sweep: [-5.0, 15.0, 1.0]   # [start, end, step]
+
+flight_conditions:
+  takeoff:
+    mach_relative: 0.85
+    axial_velocity: 180       # m/s
+    altitude: 0               # m (sea level)
+    ncrit: 4.0
+  climb:
+    mach_relative: 0.85
+    axial_velocity: 155
+    altitude: 3000
+    ncrit: 4.0
+  cruise:
+    mach_relative: 0.93
+    axial_velocity: 150
+    altitude: 10000
+    ncrit: 4.0
+  descent:
+    mach_relative: 0.80
+    axial_velocity: 125
+    altitude: 3000
+    ncrit: 4.0
+
+alpha_sweep_simulations:
+  start: -5.0
+  end: 20.0
+  step: 1.0
+
+airfoil_candidates:
+  - naca_0012
+  - naca_63-215
+  - naca_65-210
+  - naca_65-410
+
+atmosphere:
+  sea_level_temperature: 288.15   # K
+  sea_level_pressure: 101325.0    # Pa
+  lapse_rate: 0.0065              # K/m
+  gamma: 1.4
+  R_air: 287.058                  # J/(kg·K)
+  mu_ref: 1.716e-5                # Pa·s (Sutherland ref)
+  T_ref: 273.15                   # K (Sutherland ref)
+  S_suth: 110.4                   # K (Sutherland constant)
