@@ -14,8 +14,8 @@ su2:
   turbulence_model: SA    # Spalart-Allmaras
   cfl_number: 5.0         # adaptive CFL enabled (ramps up to 100)
   mesh_farfield_radius: 20
-  mesh_airfoil_points: 300
-  mesh_radial_layers: 100
+  mesh_airfoil_points: 150
+  mesh_radial_layers: 60
   mesh_growth_rate: 1.15
   target_yplus: 1.0
   timeout_seconds: 300    # per AoA; 5 min is plenty with restart chaining

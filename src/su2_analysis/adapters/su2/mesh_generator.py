@@ -176,7 +176,6 @@ def generate_cgrid_mesh(
 
     # ── Generate and export ───────────────────────────────────────────────────
     gmsh.model.mesh.generate(2)
-    gmsh.model.mesh.optimize("Netgen")
 
     su2_path = str(output_mesh)
     gmsh.write(su2_path)
