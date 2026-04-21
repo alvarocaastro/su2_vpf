@@ -12,6 +12,10 @@ import math
 from pathlib import Path
 from typing import List, Tuple
 import numpy as np
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import matplotlib.tri as mtri
 
 try:
     import gmsh
@@ -179,6 +183,65 @@ def generate_cgrid_mesh(
 
     su2_path = str(output_mesh)
     gmsh.write(su2_path)
+
+    # Extract node/element data for visualization before finalizing
+    node_tags, node_coords, _ = gmsh.model.mesh.getNodes()
+    elem_types, elem_tags, elem_node_tags = gmsh.model.mesh.getElements(dim=2)
+
     gmsh.finalize()
 
+    _save_mesh_image(output_mesh, node_tags, node_coords, elem_types, elem_node_tags)
+
     return output_mesh
+
+
+def _save_mesh_image(
+    mesh_path: Path,
+    node_tags: np.ndarray,
+    node_coords: np.ndarray,
+    elem_types: list,
+    elem_node_tags: list,
+) -> None:
+    """Save a PNG image of the 2-D mesh using matplotlib."""
+    coords = node_coords.reshape(-1, 3)
+    x_all = coords[:, 0]
+    y_all = coords[:, 1]
+
+    # Map node tag → index
+    tag_to_idx = {int(t): i for i, t in enumerate(node_tags)}
+
+    triangles = []
+    for etype, enodes in zip(elem_types, elem_node_tags):
+        # element type 2 = 3-node triangle, type 3 = 4-node quad
+        if etype == 2:
+            n_per = 3
+        elif etype == 3:
+            n_per = 4
+        else:
+            continue
+        nodes = enodes.reshape(-1, n_per)
+        for row in nodes:
+            idx = [tag_to_idx[int(t)] for t in row]
+            if etype == 2:
+                triangles.append(idx)
+            else:
+                # split quad into two triangles
+                triangles.append([idx[0], idx[1], idx[2]])
+                triangles.append([idx[0], idx[2], idx[3]])
+
+    if not triangles:
+        return
+
+    tri = mtri.Triangulation(x_all, y_all, triangles)
+
+    fig, ax = plt.subplots(figsize=(10, 7))
+    ax.triplot(tri, color="steelblue", linewidth=0.3, alpha=0.7)
+    ax.set_aspect("equal")
+    ax.set_title(mesh_path.stem, fontsize=10)
+    ax.set_xlabel("x [m]")
+    ax.set_ylabel("y [m]")
+    plt.tight_layout()
+
+    png_path = mesh_path.with_suffix(".png")
+    fig.savefig(png_path, dpi=150)
+    plt.close(fig)

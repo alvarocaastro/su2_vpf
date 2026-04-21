@@ -18,7 +18,14 @@ CD_MIN_MAX_ACCEPTABLE: float = 0.05
 CD_MIN_MIN_ACCEPTABLE: float = 1e-5
 
 # ── Mesh wall-spacing (y+ target) ─────────────────────────────────────────────
+# y+ = 1 required for wall-resolved SST (no wall functions); flat-plate estimate
 TARGET_YPLUS: float = 1.0
+
+# ── Turbulent inlet conditions (fan face) ─────────────────────────────────────
+# Fan rotor inlet: ~5% Tu from upstream OGV wakes and inlet distortion
+FREESTREAM_TURBULENCE_INTENSITY: float = 0.05
+# mu_t/mu_inf: sets turbulence length scale at far-field boundary
+FREESTREAM_TURB_RATIO: float = 10.0
 
 # ── ISA atmosphere ────────────────────────────────────────────────────────────
 GAMMA: float = 1.4

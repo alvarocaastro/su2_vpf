@@ -50,6 +50,33 @@ def relative_velocity(axial_ms: float, blade_ms: float) -> float:
     return math.sqrt(axial_ms**2 + blade_ms**2)
 
 
+def relative_flow_angle(axial_ms: float, blade_ms: float) -> float:
+    """Relative inlet flow angle from axial direction [degrees].
+
+    atan(U_blade / V_axial): the angle the relative velocity vector makes with
+    the rotor axis.  Subtract blade setting angle to get incidence.
+    """
+    return math.degrees(math.atan2(blade_ms, axial_ms))
+
+
+def incidence_angle(flow_angle_deg: float, blade_setting_deg: float) -> float:
+    """Blade incidence = relative flow angle − blade setting angle [degrees].
+
+    Positive → flow more axial than design (under-loaded).
+    Negative → flow more tangential (over-loaded, stall risk on suction side).
+    """
+    return flow_angle_deg - blade_setting_deg
+
+
+def reduced_frequency(chord_m: float, velocity_ms: float, rpm: float) -> float:
+    """Blade reduced frequency k = π·f·c / W (flutter/unsteady criterion).
+
+    k > 0.05 indicates significant unsteady effects may be present.
+    """
+    omega = 2.0 * math.pi * rpm / 60.0
+    return math.pi * omega * chord_m / velocity_ms
+
+
 def wall_spacing_for_yplus(
     yplus: float,
     velocity_ms: float,

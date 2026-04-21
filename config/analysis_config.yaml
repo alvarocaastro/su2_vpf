@@ -9,15 +9,15 @@ fan_geometry:
 
 su2:
   executable: C:/Users/Alvaro/Desktop/su2/SU2-v8.4.0-win64/win64/bin/SU2_CFD.exe
-  max_iter: 2000          # cold start; restart runs converge in ~400-600 iters
+  max_iter: 600           # cold start; restart runs converge in ~400-600 iters
   convergence_residual: -7
-  turbulence_model: SA    # Spalart-Allmaras
+  turbulence_model: SST   # k-omega SST (Menter 2003): industry standard for turbomachinery
   cfl_number: 5.0         # adaptive CFL enabled (ramps up to 100)
   mesh_farfield_radius: 20
-  mesh_airfoil_points: 150
-  mesh_radial_layers: 60
+  mesh_airfoil_points: 80
+  mesh_radial_layers: 35
   mesh_growth_rate: 1.15
-  target_yplus: 5.0
+  target_yplus: 1.0       # wall-resolved SST requires y+≤1 (no wall functions)
   timeout_seconds: 300    # per AoA; 5 min is plenty with restart chaining
   max_retries: 2
 

@@ -15,7 +15,10 @@ from su2_analysis.adapters.su2.su2_runner import run_polar_sweep
 from su2_analysis.config import AIRFOIL_DIR, STAGE_DIRS
 from su2_analysis.config_loader import AnalysisConfig
 from su2_analysis.pipeline.contracts import Stage1Result
-from su2_analysis.settings import TARGET_YPLUS, DPI, FIGURE_FORMAT
+from su2_analysis.settings import (
+    TARGET_YPLUS, DPI, FIGURE_FORMAT,
+    FREESTREAM_TURBULENCE_INTENSITY, FREESTREAM_TURB_RATIO,
+)
 from su2_analysis.shared.atmosphere import (
     isa_density, isa_temperature, sutherland_viscosity, wall_spacing_for_yplus,
 )
@@ -89,6 +92,8 @@ def run_stage1(cfg: AnalysisConfig) -> Stage1Result:
             conv_residual=cfg.su2.convergence_residual,
             cfl=cfg.su2.cfl_number,
             turb_model=cfg.su2.turbulence_model,
+            tu_intensity=FREESTREAM_TURBULENCE_INTENSITY,
+            turb_ratio=FREESTREAM_TURB_RATIO,
         )
 
         history_map = run_polar_sweep(
