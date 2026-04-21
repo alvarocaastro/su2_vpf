@@ -17,7 +17,7 @@ su2:
   mesh_airfoil_points: 150
   mesh_radial_layers: 60
   mesh_growth_rate: 1.15
-  target_yplus: 1.0
+  target_yplus: 5.0
   timeout_seconds: 300    # per AoA; 5 min is plenty with restart chaining
   max_retries: 2
 
